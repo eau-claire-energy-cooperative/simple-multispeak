@@ -8,7 +8,7 @@ import java.util.Map;
 
 import org.jdom2.Element;
 
-public class MultiSpeakService {
+public class MultiSpeakEndpoint {
 	//static variables for key names
 	private final String MULTISPEAK_USERNAME = "UserID";
 	private final String MULTISPEAK_PASSWORD = "Pwd";
@@ -17,7 +17,7 @@ public class MultiSpeakService {
 	private URL m_url = null;
 	private Map<String,String> m_options = null;
 	
-	public MultiSpeakService(String url){
+	public MultiSpeakEndpoint(String url){
 	
 		try {
 			m_url = new URL(url);
@@ -28,12 +28,12 @@ public class MultiSpeakService {
 		m_options = new HashMap<String,String>();
 	}
 	
-	public MultiSpeakService(String url, String username, String password){
+	public MultiSpeakEndpoint(String url, String username, String password){
 		this(url);
 		this.setAuthentication(username, password);
 	}
 	
-	public MultiSpeakService(String url, String username, String password, String app){
+	public MultiSpeakEndpoint(String url, String username, String password, String app){
 		this(url,username,password);
 		this.setAppName(app);
 	}

@@ -18,9 +18,9 @@ import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.XMLOutputter;
 
 public class MultiSpeakClient {
-	private MultiSpeakService m_service = null;
+	private MultiSpeakEndpoint m_service = null;
 	
-	public MultiSpeakClient(MultiSpeakService service){
+	public MultiSpeakClient(MultiSpeakEndpoint service){
 		m_service = service;
 	}
 	
