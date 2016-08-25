@@ -63,7 +63,7 @@ public class MultiSpeakClient {
 		return new XMLOutputter().outputString(result);
 	}
 	
-	public Document call(String request, String soapAction) throws MalformedURLException, IOException, JDOMException {
+	private Document call(String request, String soapAction) throws MalformedURLException, IOException, JDOMException {
 		
 		//create the http connection
 		URLConnection connection = m_service.getURL().openConnection();
