@@ -19,6 +19,7 @@ import org.jdom2.output.XMLOutputter;
 
 public class MultiSpeakClient {
 	private MultiSpeakEndpoint m_service = null;
+	private String m_error = null;
 	
 	public MultiSpeakClient(MultiSpeakEndpoint service){
 		m_service = service;
@@ -64,6 +65,7 @@ public class MultiSpeakClient {
 	}
 	
 	private Document call(String request, String soapAction) throws MalformedURLException, IOException, JDOMException {
+		Document result = null;
 		
 		//create the http connection
 		URLConnection connection = m_service.getURL().openConnection();
@@ -89,23 +91,40 @@ public class MultiSpeakClient {
 		//Write the content of the request to the outputstream of the HTTP Connection
 		out.write(b);
 		out.close();	
-		 
-		//Read the response
-		InputStreamReader isr = new InputStreamReader(httpConn.getInputStream());
-		BufferedReader in = new BufferedReader(isr);
-		String outputString = "";
-		String aString = "";
 		
-		//Write the SOAP message response to a String.
-		while ((aString = in.readLine()) != null) {
-			outputString = outputString + aString;
+		if(httpConn.getResponseCode() == HttpURLConnection.HTTP_OK)
+		{
+			//Read the response
+			InputStreamReader isr = new InputStreamReader(httpConn.getInputStream());
+			BufferedReader in = new BufferedReader(isr);
+			String outputString = "";
+			String aString = "";
+			
+			//Write the SOAP message response to a String.
+			while ((aString = in.readLine()) != null) {
+				outputString = outputString + aString;
+			}
+	
+			//parse this into a document
+			SAXBuilder builder = new SAXBuilder();
+			
+			//need a string reader to create an input stream
+			result = builder.build(new StringReader(outputString));
 		}
-
-		//parse this into a document
-		SAXBuilder builder = new SAXBuilder();
+		else
+		{
+			//get the error message
+			InputStreamReader errorStream = new InputStreamReader(httpConn.getErrorStream());
+			BufferedReader in = new BufferedReader(errorStream);
+			m_error = "";
+			String aString = "";
+			
+			while ((aString = in.readLine()) != null) {
+				m_error = m_error + aString;
+			}
+		}
 		
-		//need a string reader to create an input stream
-		return builder.build(new StringReader(outputString));
+		return result;
 	}
 	
 	public Document sendRequest(String method){
@@ -122,10 +141,13 @@ public class MultiSpeakClient {
 		}
 		catch(Exception e)
 		{
-			//if this triggers the result will be null 
-			e.printStackTrace();
+			//don't do anything here as we'll have an error message
 		}
 		
 		return response;
+	}
+	
+	public String getError(){
+		return m_error;
 	}
 }
