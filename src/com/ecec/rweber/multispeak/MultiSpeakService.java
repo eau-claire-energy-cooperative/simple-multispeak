@@ -3,19 +3,20 @@ package com.ecec.rweber.multispeak;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.jdom2.Element;
 
 /**
  * @author rweber
  *
- * This class should be extended by service endpoints such as MR (meter reading), OA (outage managment), etc. 
+ * This class represents a service endpoint such as MR (meter reading), OA (outage managment), etc. 
  */
-public abstract class MultiSpeakService {
-	protected MultiSpeakClient g_client = null;
+public class MultiSpeakService {
+	protected MultiSpeakClient m_client = null;
 	
 	public MultiSpeakService(MultiSpeakEndpoint endpoint){
-		g_client = new MultiSpeakClient(endpoint);
+		m_client = new MultiSpeakClient(endpoint);
 	}
 	
 	/**
@@ -26,7 +27,7 @@ public abstract class MultiSpeakService {
 	public List<String> getMethods(){
 		List<String> result = new ArrayList<String>();
 		
-		Element methods = MultiSpeak.getResult(g_client.sendRequest("GetMethods"),"GetMethods");
+		Element methods = this.call("GetMethods");
 		
 		if(methods != null)
 		{
@@ -45,22 +46,39 @@ public abstract class MultiSpeakService {
 	/**
 	 * All MultiSpeak Endpoints should implement this
 	 * 
-	 * @return a list of errors returned by this ping, if empty the ping was a success
+	 * @return true/false if the ping was successful
 	 */
-	public List<String> ping(){
-		List<String> result = new ArrayList<String>();
+	public boolean ping(){
+		boolean result = false;
 		
-		Element pingResult = MultiSpeak.getResult(g_client.sendRequest("PingURL"),"PingURL");
+		Element pingResult = this.call("PingURL");
 		
 		if(pingResult != null)
 		{
-			Iterator<Element> children = pingResult.getChildren("errorObject").iterator();
-			
-			while(children.hasNext())
-			{
-				result.add(children.next().getAttributeValue("errorString"));
-			}
+			result = pingResult.getChildren().isEmpty();
 		}
+		
+		return result;
+	}
+	
+	/**
+	 * This is a convienence method
+	 * @param method the method to send to the MultiSpeak Service
+	 * @return the result element with the SOAP envelope stripped off
+	 */
+	public Element call(String method){
+		return this.call(method, null);
+	}
+	
+	/**
+	 * @param method the method to send to the MultiSpeak Service
+	 * @param params any parameters to pass, can be null
+	 * @return the result element with the SOAP envelope stripped off
+	 */
+	public Element call(String method, Map<String,String> params){
+		
+		//send the request and parse the result
+		Element result = MultiSpeak.getResult(m_client.sendRequest(method,params),method);
 		
 		return result;
 	}
