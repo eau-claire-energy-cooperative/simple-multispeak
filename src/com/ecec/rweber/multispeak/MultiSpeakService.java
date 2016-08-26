@@ -43,7 +43,15 @@ public class MultiSpeakService {
 				if(child1 != null)
 				{
 					//get the result
-					result = child1.getChild(method + "Result",MultiSpeak.MULTISPEAK_RESULT_NAMESPACE);
+					if(child1.getChild(method + "Result",MultiSpeak.MULTISPEAK_RESULT_NAMESPACE) != null)
+					{
+						result = child1.getChild(method + "Result",MultiSpeak.MULTISPEAK_RESULT_NAMESPACE);
+					}
+					else
+					{
+						//some methods (who knows why) use this as their root node for the response 
+						result = child1;
+					}
 				}
 			}
 		}
