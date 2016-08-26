@@ -18,9 +18,16 @@ public class MultiSpeak {
 	 * @return the xml element as a string
 	 */
 	public static String printXML(Element xml){
-		XMLOutputter output = new XMLOutputter();
-		output.setFormat(Format.getPrettyFormat());
+		String result = "";
 		
-		return output.outputString(xml);
+		if(xml != null)
+		{
+			XMLOutputter output = new XMLOutputter();
+			output.setFormat(Format.getPrettyFormat());
+			
+			result =  output.outputString(xml);
+		}
+		
+		return result;
 	}
 }
