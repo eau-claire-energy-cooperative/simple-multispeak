@@ -56,7 +56,10 @@ public class MultiSpeakEndpoint {
 		{
 			aKey = iter.next();
 			
-			msHeader.setAttribute(aKey,m_options.get(aKey));
+			if(!m_options.get(aKey).isEmpty())
+			{
+				msHeader.setAttribute(aKey,m_options.get(aKey));
+			}
 		}
 		
 		header.addContent(msHeader);
