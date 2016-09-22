@@ -1,5 +1,11 @@
 package com.ecec.rweber.multispeak;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
+
 import org.jdom2.Element;
 import org.jdom2.Namespace;
 import org.jdom2.output.Format;
@@ -26,6 +32,26 @@ public class MultiSpeak {
 			output.setFormat(Format.getPrettyFormat());
 			
 			result =  output.outputString(xml);
+		}
+		
+		return result;
+	}
+	
+	/**
+	 * @param d the date as a MultiSpeak datetime object (yyyy-MM-dd'T'HH:mm:ss.SSSZ)
+	 * @return the result as a java date
+	 */
+	public static Date parseDate(String d, String timezone){
+		Date result = null;
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",Locale.US);
+		formatter.setTimeZone(TimeZone.getTimeZone(timezone));		//need to change this
+		
+		try {
+			result = formatter.parse(d);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		return result;
