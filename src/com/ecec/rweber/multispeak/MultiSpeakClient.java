@@ -17,7 +17,7 @@ import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.XMLOutputter;
 
-public class MultiSpeakClient {
+class MultiSpeakClient {
 	private MultiSpeakEndpoint m_service = null;
 	private String m_error = null;
 	
