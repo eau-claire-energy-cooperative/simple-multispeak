@@ -6,11 +6,6 @@
   <name>Simple Multispeak Library</name>
   
   <repositories>
-	  <repository>
-        <id>ecec</id>
-        <name>dev-test-releases</name>
-        <url>http://10.10.10.87:8081/artifactory/libs-release-local</url>
-	  </repository>
 	 
 	  <repository>
 	  	<id>apache</id>
