@@ -1,7 +1,7 @@
 # Simple Multispeak Library
 
 ### Overview
-The goal of this library is to provide a simple, extendable, interface for communicating with a webservice implementing the Multispeak Standard. This is done via XML based HTTP calls utilizing the JDOM 2 XML library. SOAP based libraries (such as AXIS) are not being used as WSDL files returned by vendor implementations of MultiSpeak are often incomplete and fail parsing tests. 
+The goal of this library is to provide a simple, extendable, interface for communicating with a webservice implementing the [Multispeak Standard](http://www.multispeak.org/Pages/default.aspx). This is done via XML based HTTP calls utilizing the [JDOM 2 XML](http://www.jdom.org/) library. SOAP based libraries and auto stub generation (such as [AXIS](http://axis.apache.org/axis2/java/core/)) are not being used as WSDL files returned by vendor implementations of MultiSpeak are often incomplete and fail parsing tests. 
 
 Creating a useable program using this library will involve defining a MultiSpeakService java class and defining what methods you want to use. Vendor implementations of Multispeak often do not implement every method in the standard so using the built in getMethods() function will return a list of available methods. A ping() function is also available to test basic connectivity. 
 
