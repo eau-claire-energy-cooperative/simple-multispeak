@@ -18,7 +18,7 @@ public class MultiSpeak {
 	public static final Namespace MULTISPEAK_RESULT_NAMESPACE = Namespace.getNamespace("ns2", "http://www.multispeak.org/Version_3.0");
 	
 	/**
-	 * This is a helper function for debugging other purposes to print results
+	 * This is a helper function for debugging purposes to print results
 	 * 
 	 * @param xml the xml element to print
 	 * @return the xml element as a string
@@ -39,6 +39,7 @@ public class MultiSpeak {
 	
 	/**
 	 * @param d the date as a MultiSpeak datetime object (yyyy-MM-dd'T'HH:mm:ss.SSSZ)
+	 * @param timezone the timezone as a standard abbreviation, CDT, PDT, etc
 	 * @return the result as a java date
 	 */
 	public static Date parseDate(String d, String timezone){

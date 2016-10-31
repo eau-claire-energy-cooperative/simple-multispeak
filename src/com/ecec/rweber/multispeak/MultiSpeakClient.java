@@ -17,6 +17,11 @@ import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.XMLOutputter;
 
+/**
+ * @author rweber
+ *  
+ *  Non-visible class for encapsulating the HTTP send/receive functions of the library. This is called in the background by all classes extending the MultiSpeakService class. Any additional envelope information needed to complete the MultiSpeak call is done here as well.  
+ */
 class MultiSpeakClient {
 	private MultiSpeakEndpoint m_service = null;
 	private String m_error = null;
@@ -127,10 +132,19 @@ class MultiSpeakClient {
 		return result;
 	}
 	
+	/**
+	 * @param method Multispeak Method to send to the endpoint
+	 * @return the xml result of the call (could be null)
+	 */
 	public Document sendRequest(String method){
 		return this.sendRequest(method, null);
 	}
 	
+	/**
+	 * @param method Multispeak Method to send to the endpoint
+	 * @param params a map of the parameters as key/value pairs 
+	 * @return the xml result of the call (could be null)
+	 */
 	public Document sendRequest(String method, Map<String,String> params){
 		Document response = null;
 		String request = this.createEnvelope(method, params);
@@ -147,6 +161,11 @@ class MultiSpeakClient {
 		return response;
 	}
 	
+	/**
+	 * This is a helper function to return errors that occur during HTTP calls since they will not be thrown. 
+	 * 
+	 * @return error message as a string
+	 */
 	public String getError(){
 		return m_error;
 	}

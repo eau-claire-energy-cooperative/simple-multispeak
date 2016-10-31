@@ -11,11 +11,16 @@ import org.jdom2.Element;
 /**
  * @author rweber
  *
- * This class represents a service endpoint such as MR (meter reading), OA (outage managment), etc. 
+ * This is an abstract class representing a service endpoint such as MR (meter reading), OA (outage managment), etc.
+ * 
+ *  To interact in a meaningful way with any MultiSpeak endpoint this class should be extended and specific methods implemented per vendor implementations of each Multispeak Service. This class can be created standalone with the call() method being used to pass method names as String objects.
  */
 public class MultiSpeakService {
 	protected MultiSpeakClient m_client = null;
 	
+	/**
+	 * @param endpoint a valid MultiSpeakEndpoint - connection information
+	 */
 	public MultiSpeakService(MultiSpeakEndpoint endpoint){
 		m_client = new MultiSpeakClient(endpoint);
 	}
@@ -102,7 +107,7 @@ public class MultiSpeakService {
 	}
 	
 	/**
-	 * This is a convienence method
+	 * This is a convenience method for Multispeak calls with no parameters
 	 * @param method the method to send to the MultiSpeak Service
 	 * @return the result element with the SOAP envelope stripped off
 	 */
@@ -111,9 +116,11 @@ public class MultiSpeakService {
 	}
 	
 	/**
+	 * Call a Multispeak method with the given parameters. Results are returned as an XML element of the payload
+	 * 
 	 * @param method the method to send to the MultiSpeak Service
 	 * @param params any parameters to pass, can be null
-	 * @return the result element with the SOAP envelope stripped off
+	 * @return the result element with the SOAP envelope stripped off - can be NULL
 	 */
 	public Element call(String method, Map<String,String> params){
 		
