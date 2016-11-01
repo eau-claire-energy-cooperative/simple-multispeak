@@ -18,9 +18,10 @@ import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.XMLOutputter;
 
 /**
+ * Non-visible class for encapsulating the HTTP send/receive functions of the library. This is called in the background by all classes extending the MultiSpeakService class. Any additional envelope information needed to complete the MultiSpeak call is done here as well.  
+ * 
  * @author rweber
  *  
- *  Non-visible class for encapsulating the HTTP send/receive functions of the library. This is called in the background by all classes extending the MultiSpeakService class. Any additional envelope information needed to complete the MultiSpeak call is done here as well.  
  */
 class MultiSpeakClient {
 	private MultiSpeakEndpoint m_service = null;

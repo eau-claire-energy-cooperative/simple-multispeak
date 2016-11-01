@@ -11,6 +11,12 @@ import org.jdom2.Namespace;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
+/**
+ * High level class with some static members and functions for navigating Multispeak calls
+ * 
+ * @author rweber
+ *  
+ */
 public class MultiSpeak {
 	//some static namespace definitions that help with requests/responses
 	public static final Namespace SOAP_NAMESPACE = Namespace.getNamespace("soapenv", "http://schemas.xmlsoap.org/soap/envelope/");

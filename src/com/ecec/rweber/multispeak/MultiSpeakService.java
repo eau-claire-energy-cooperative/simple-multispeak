@@ -9,12 +9,13 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 
 /**
- * @author rweber
- *
  * This is an abstract class representing a service endpoint such as MR (meter reading), OA (outage managment), etc.
  * 
- *  To interact in a meaningful way with any MultiSpeak endpoint this class should be extended and specific methods implemented per vendor implementations of each Multispeak Service. This class can be created standalone with the call() method being used to pass method names as String objects.
- */
+ * To interact in a meaningful way with any MultiSpeak endpoint this class should be extended and specific methods implemented per vendor implementations of each Multispeak Service. This class can be created standalone with the call() method being used to pass method names as String objects.
+ * 
+ * @author rweber
+ *
+ * */
 public class MultiSpeakService {
 	protected MultiSpeakClient m_client = null;
 	

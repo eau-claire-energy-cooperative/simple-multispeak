@@ -9,9 +9,10 @@ import java.util.Map;
 import org.jdom2.Element;
 
 /**
+ * This class represents the connection information for a given Multispeak endpoint. This is the starting point for creating any type of service communication. Endpoints can be created with or without authentication information depending on how they are setup. 
+ * 
  * @author rweber
  *
- * This class represents the connection information for a given Multispeak endpoint. This is the starting point for creating any type of service communication. Endpoints can be created with or without authentication information depending on how they are setup. 
  */
 public class MultiSpeakEndpoint {
 	//static variables for key names
