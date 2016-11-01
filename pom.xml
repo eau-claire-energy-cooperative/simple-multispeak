@@ -35,6 +35,30 @@
           <target>1.7</target>
         </configuration>
       </plugin>
+      <plugin>
+      	<groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-javadoc-plugin</artifactId>
+		<version>2.10.4</version>
+		<configuration>
+			<outputDirectory>${project.basedir}</outputDirectory>
+			<reportOutputDirectory>${project.basedir}</reportOutputDirectory>
+			<excludePackageNames>com.ecec.rweber.multispeak.test</excludePackageNames>
+			<show>package</show>
+			<links>
+				<link>https://docs.oracle.com/javase/7/docs/api/</link>
+				<link>http://www.jdom.org/docs/apidocs/</link>
+			</links>
+		</configuration>
+      	<executions>
+      		<execution>
+	      		<id>generate-javadoc</id>
+	      		<phase>generate-sources</phase>
+	      		<goals>
+	      			<goal>javadoc</goal>
+	      		</goals>
+	      	</execution>
+      	</executions>
+      </plugin>
     </plugins>
   </build>
   <organization>
