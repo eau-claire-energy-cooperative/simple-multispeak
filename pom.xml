@@ -52,7 +52,7 @@
       	<executions>
       		<execution>
 	      		<id>generate-javadoc</id>
-	      		<phase>generate-sources</phase>
+	      		<phase>generate-source</phase>
 	      		<goals>
 	      			<goal>javadoc</goal>
 	      		</goals>
