@@ -10,6 +10,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URLConnection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -31,7 +32,11 @@ class MultiSpeakClient {
 		m_service = service;
 	}
 	
-	private String createEnvelope(String method, Map<String,String> params){
+	private boolean hasError(){
+		return m_error != null;
+	}
+	
+	private String createEnvelope(String method, List<Element> params){
 		Document result = new Document();
 		
 		//create the root node
@@ -45,21 +50,9 @@ class MultiSpeakClient {
 		
 		Element xmlMethod = new Element(method);
 		
-		//check if there are any params
 		if(params != null)
 		{
-			Iterator<String> keys = params.keySet().iterator();
-			String aKey = null;
-		
-			while(keys.hasNext())
-			{
-				aKey = keys.next();
-				Element aParam = new Element(aKey);
-				aParam.setText(params.get(aKey));
-			
-				//add this to the xml method
-				xmlMethod.addContent(aParam);
-			}
+			xmlMethod.addContent(params);
 		}
 		
 		body.addContent(xmlMethod);
@@ -71,6 +64,7 @@ class MultiSpeakClient {
 	}
 	
 	private Document call(String request, String soapAction) throws MalformedURLException, IOException, JDOMException {
+		m_error = null;
 		Document result = null;
 		
 		//create the http connection
@@ -136,38 +130,44 @@ class MultiSpeakClient {
 	/**
 	 * @param method Multispeak Method to send to the endpoint
 	 * @return the xml result of the call (could be null)
+	 * @throws MultiSpeakException
 	 */
-	public Document sendRequest(String method){
+	public Document sendRequest(String method) throws MultiSpeakException {
 		return this.sendRequest(method, null);
 	}
 	
 	/**
 	 * @param method Multispeak Method to send to the endpoint
-	 * @param params a map of the parameters as key/value pairs 
+	 * @param params the element that contain the parameters for this method
 	 * @return the xml result of the call (could be null)
+	 * @throws MultiSpeakException
 	 */
-	public Document sendRequest(String method, Map<String,String> params){
+	public Document sendRequest(String method, List<Element> params) throws MultiSpeakException {
 		Document response = null;
 		String request = this.createEnvelope(method, params);
-		
+		System.out.println(request);
 		//try and send the request to the endpoint
 		try{
 			response = this.call(request, m_service.getURL() + "/" + method);
+			
+			if(this.hasError())
+			{
+				throw new MultiSpeakException(m_error);
+			}
 		}
-		catch(Exception e)
+		catch(MalformedURLException me)
 		{
 			//don't do anything here as we'll have an error message
 		}
+		catch(IOException io)
+		{
+			
+		}
+		catch(JDOMException jd)
+		{
+			
+		}
 		
 		return response;
-	}
-	
-	/**
-	 * This is a helper function to return errors that occur during HTTP calls since they will not be thrown. 
-	 * 
-	 * @return error message as a string
-	 */
-	public String getError(){
-		return m_error;
 	}
 }
