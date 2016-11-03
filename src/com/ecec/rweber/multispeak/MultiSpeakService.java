@@ -65,6 +65,25 @@ public class MultiSpeakService {
 		return result;
 	}
 	
+	protected List<Element> createParams(String[] params){
+		List<Element> result = new ArrayList<Element>();
+		
+		//we must have equal key/value pairs
+		if(params.length > 0 && params.length % 2 == 0)
+		{
+			Element temp = null;
+			for(int count = 0; count < params.length; count = count + 2)
+			{
+				temp = new Element(params[count]);
+				temp.setText(params[count + 1]);
+				
+				result.add(temp);
+			}
+		}
+		
+		return result;
+	}
+	
 	/**
 	 *  All MultiSpeak Endpoints should implement this
 	 * 
@@ -112,8 +131,12 @@ public class MultiSpeakService {
 	 * @param method the method to send to the MultiSpeak Service
 	 * @return the result element with the SOAP envelope stripped off
 	 */
-	public Element call(String method){
-		return this.call(method, null);
+	public Element call(String method) {
+		return this.call(method, createParams(new String[]{}));
+	}
+	
+	public Element call(String method, String[] params){
+		return this.call(method,createParams(params));
 	}
 	
 	/**
@@ -123,10 +146,21 @@ public class MultiSpeakService {
 	 * @param params any parameters to pass, can be null
 	 * @return the result element with the SOAP envelope stripped off - can be NULL
 	 */
-	public Element call(String method, Map<String,String> params){
+	public Element call(String method, List<Element> params) {
+		Element result = null;
 		
-		//send the request and parse the result
-		Element result = this.getResult(m_client.sendRequest(method,params),method);
+		try{
+			//send the request
+			Document xmlResponse = m_client.sendRequest(method,params);
+		
+			//send the request and parse the result
+			result = this.getResult(xmlResponse,method);
+		}
+		catch(MultiSpeakException e)
+		{
+			e.printStackTrace();
+		}
+		
 		
 		return result;
 	}
