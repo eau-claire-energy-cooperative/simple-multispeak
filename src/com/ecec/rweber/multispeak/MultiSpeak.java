@@ -5,11 +5,16 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 import org.jdom2.Element;
 import org.jdom2.Namespace;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.ISODateTimeFormat;
 
 /**
  * High level class with some static members and functions for navigating Multispeak calls
@@ -43,24 +48,32 @@ public final class MultiSpeak {
 		return result;
 	}
 	
+	
 	/**
-	 * @param d the date as a MultiSpeak datetime object (yyyy-MM-dd'T'HH:mm:ss.SSSZ)
-	 * @param timezone the timezone as a standard abbreviation, CDT, PDT, etc
-	 * @return the result as a java date
+	 * helper method to convert returned xml datetime values to something more useable
+	 * 
+	 * @param d the datetime string as an ISO date (returned by Multispeak calls)
+	 * @return the parsed string as a DateTime object
 	 */
-	public static Date parseDate(String d, String timezone){
-		Date result = null;
+	public static DateTime fromMultispeakDate(String d){
+		DateTimeFormatter parser = ISODateTimeFormat.dateTimeParser();
+
+		return parser.parseDateTime(d);
+	}
+	
+	/**
+	 * helper method to convert a given date to a useable ISO date for xml calls
+	 * @param year
+	 * @param monthOfYear
+	 * @param dayOfMonth
+	 * @param hourOfDay
+	 * @param minuteOfHour
+	 * @return the date as an ISO date string (suitable for Multispeak)
+	 */
+	public static String toMultispeakDate(int year, int monthOfYear, int dayOfMonth, int hourOfDay, int minuteOfHour){
 		
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",Locale.US);
-		formatter.setTimeZone(TimeZone.getTimeZone(timezone));		//need to change this
+		DateTime d = new DateTime(year,monthOfYear,dayOfMonth,hourOfDay,minuteOfHour,DateTimeZone.getDefault());
 		
-		try {
-			result = formatter.parse(d);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return result;
+		return d.toString();
 	}
 }
