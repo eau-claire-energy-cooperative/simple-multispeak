@@ -145,7 +145,7 @@ class MultiSpeakClient {
 	public Document sendRequest(String method, List<Element> params) throws MultiSpeakException {
 		Document response = null;
 		String request = this.createEnvelope(method, params);
-		System.out.println(request);
+		
 		//try and send the request to the endpoint
 		try{
 			response = this.call(request, m_service.getURL() + "/" + method);
