@@ -19,14 +19,16 @@ public class MultiSpeakEndpoint {
 	private final String MULTISPEAK_USERNAME = "UserID";
 	private final String MULTISPEAK_PASSWORD = "Pwd";
 	private final String MULTISPEAK_APPNAME = "AppName";
+	private final String MULTISPEAK_COMPANY = "Company";
 			
 	private URL m_url = null;
 	private Map<String,String> m_options = null;
 	
 	/**
+	 * @param company the name of the company as defined by the service endpoint
 	 * @param url the full URL, including port if needed
 	 */
-	public MultiSpeakEndpoint(String url){
+	public MultiSpeakEndpoint(String company, String url){
 	
 		try {
 			m_url = new URL(url);
@@ -35,26 +37,29 @@ public class MultiSpeakEndpoint {
 		}
 	
 		m_options = new HashMap<String,String>();
+		this.setCompany(company);
 	}
 	
 	/**
+	 * @param company the name of the company as defined by the service endpoint
 	 * @param url the full URL, including port if needed
 	 * @param username username of the endpoint
 	 * @param password password of the endpoint
 	 */
-	public MultiSpeakEndpoint(String url, String username, String password){
-		this(url);
+	public MultiSpeakEndpoint(String company, String url, String username, String password){
+		this(company,url);
 		this.setAuthentication(username, password);
 	}
 	
 	/**
+	 * @param company the name of the company as defined by the service endpoint
 	 * @param url the full URL, including port if needed
 	 * @param username username of the endpoint
 	 * @param password password of the endpoint
 	 * @param app appname as defined by the endpoint setup
 	 */
-	public MultiSpeakEndpoint(String url, String username, String password, String app){
-		this(url,username,password);
+	public MultiSpeakEndpoint(String company, String url, String username, String password, String app){
+		this(company,url,username,password);
 		this.setAppName(app);
 	}
 	
@@ -104,5 +109,13 @@ public class MultiSpeakEndpoint {
 	 */
 	public void setAppName(String app){
 		m_options.put(MULTISPEAK_APPNAME, app);
+	}
+	
+	/**
+	 * This could be used to set the company name after object creation, if necessary
+	 * @param company name of the company as defined by the endpoint setup
+	 */
+	public void setCompany(String company){
+		m_options.put(MULTISPEAK_COMPANY,company);
 	}
 }
