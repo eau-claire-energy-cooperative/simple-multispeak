@@ -83,10 +83,6 @@ public class MultiSpeakService {
 				result.add(temp);
 			}
 		}
-		else
-		{
-			m_log.debug("Must have equal key/value pairs");
-		}
 		
 		return result;
 	}
