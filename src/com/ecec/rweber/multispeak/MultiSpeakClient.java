@@ -12,6 +12,8 @@ import java.net.URLConnection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.log4j.Logger;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -25,10 +27,12 @@ import org.jdom2.output.XMLOutputter;
  *  
  */
 class MultiSpeakClient {
+	private Logger m_log = null;
 	private MultiSpeakEndpoint m_service = null;
 	private String m_error = null;
 	
 	public MultiSpeakClient(MultiSpeakEndpoint service){
+		m_log = Logger.getLogger(this.getClass());
 		m_service = service;
 	}
 	
@@ -157,15 +161,15 @@ class MultiSpeakClient {
 		}
 		catch(MalformedURLException me)
 		{
-			//don't do anything here as we'll have an error message
+			m_log.error(me.getMessage(),me);
 		}
 		catch(IOException io)
 		{
-			
+			m_log.error(io.getMessage(),io);
 		}
 		catch(JDOMException jd)
 		{
-			
+			m_log.error(jd.getMessage(),jd);
 		}
 		
 		return response;

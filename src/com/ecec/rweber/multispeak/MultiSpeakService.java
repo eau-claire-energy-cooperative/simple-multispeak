@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.jdom2.Document;
 import org.jdom2.Element;
 
@@ -17,12 +18,14 @@ import org.jdom2.Element;
  *
  * */
 public class MultiSpeakService {
+	protected Logger m_log = null;
 	protected MultiSpeakClient m_client = null;
 	
 	/**
 	 * @param endpoint a valid MultiSpeakEndpoint - connection information
 	 */
 	public MultiSpeakService(MultiSpeakEndpoint endpoint){
+		m_log = Logger.getLogger(this.getClass());
 		m_client = new MultiSpeakClient(endpoint);
 	}
 	
@@ -79,6 +82,10 @@ public class MultiSpeakService {
 				
 				result.add(temp);
 			}
+		}
+		else
+		{
+			m_log.debug("Must have equal key/value pairs");
 		}
 		
 		return result;
@@ -158,7 +165,7 @@ public class MultiSpeakService {
 		}
 		catch(MultiSpeakException e)
 		{
-			e.printStackTrace();
+			m_log.error(e.getMessage(),e);
 		}
 		
 		
