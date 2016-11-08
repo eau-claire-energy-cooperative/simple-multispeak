@@ -51,22 +51,6 @@ public class MultiSpeakEndpoint {
 		this.setAuthentication(username, password);
 	}
 	
-	/**
-	 * @param company the name of the company as defined by the service endpoint
-	 * @param url the full URL, including port if needed
-	 * @param username username of the endpoint
-	 * @param password password of the endpoint
-	 * @param app appname as defined by the endpoint setup
-	 */
-	public MultiSpeakEndpoint(String company, String url, String username, String password, String app){
-		this(company,url,username,password);
-		this.setAppName(app);
-	}
-	
-	protected URL getURL(){
-		return m_url;
-	}
-	
 	protected Element createHeader(){
 		Element header = new Element("Header",MultiSpeak.SOAP_NAMESPACE);
 		Element msHeader = new Element("MultiSpeakMsgHeader",MultiSpeak.MULTISPEAK_NAMESPACE);
@@ -90,6 +74,39 @@ public class MultiSpeakEndpoint {
 		header.addContent(msHeader);
 		
 		return header;
+	}
+	
+	/**
+	 * @param company the name of the company as defined by the service endpoint
+	 * @param url the full URL, including port if needed
+	 * @param username username of the endpoint
+	 * @param password password of the endpoint
+	 * @param app appname as defined by the endpoint setup
+	 */
+	public MultiSpeakEndpoint(String company, String url, String username, String password, String app){
+		this(company,url,username,password);
+		this.setAppName(app);
+	}
+	
+	public URL getURL(){
+		return m_url;
+	}
+	
+	
+	public String getUsername(){
+		return m_options.get(MULTISPEAK_USERNAME);
+	}
+	
+	public String getPassword(){
+		return m_options.get(MULTISPEAK_PASSWORD);
+	}
+	
+	public String getAppName(){
+		return m_options.get(MULTISPEAK_APPNAME);
+	}
+	
+	public String getCompany(){
+		return m_options.get(MULTISPEAK_COMPANY);
 	}
 	
 	/**
