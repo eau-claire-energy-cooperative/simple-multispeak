@@ -48,7 +48,6 @@ public class MultiSpeakService {
 			Element body = response.getRootElement().getChild("Body", soapNamespace);
 			if(body != null)
 			{
-				System.out.println(MultiSpeak.printXML(body));
 				//get the response child
 				Element child1 = null;
 				
