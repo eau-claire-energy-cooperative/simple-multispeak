@@ -8,6 +8,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.jdom2.Namespace;
 
 /**
  * This is an abstract class representing a service endpoint such as MR (meter reading), OA (outage managment), etc.
@@ -40,23 +41,44 @@ public class MultiSpeakService {
 		Element result = null;
 		
 		if(response != null)
-		{			
-			//first get the body
-			Element body = response.getRootElement().getChild("Body", MultiSpeak.SOAP_NAMESPACE);
+		{	
+			Namespace soapNamespace = response.getRootElement().getNamespace();
 			
+			//first get the body
+			Element body = response.getRootElement().getChild("Body", soapNamespace);
 			if(body != null)
 			{
+				System.out.println(MultiSpeak.printXML(body));
 				//get the response child
-				Element child1 = body.getChild(method + "Response");
+				Element child1 = null;
+				
+				Iterator<Element> bodyIter = body.getChildren().iterator();
+				Element temp = null;
+				while(bodyIter.hasNext() && child1 == null)
+				{
+					temp = bodyIter.next();
+					
+					if(temp.getName().equals(method + "Response"))
+					{
+						child1 = temp;
+					}
+				}
 				
 				if(child1 != null)
 				{
-					//get the result
-					if(child1.getChild(method + "Result",MultiSpeak.MULTISPEAK_RESULT_NAMESPACE) != null)
+					Iterator<Element> responseIter = child1.getChildren().iterator();
+					
+					while(responseIter.hasNext() && result == null)
 					{
-						result = child1.getChild(method + "Result",MultiSpeak.MULTISPEAK_RESULT_NAMESPACE);
+						temp = responseIter.next();
+						
+						if(temp.getName().equals(method + "Result"))
+						{
+							result = temp;
+						}
 					}
-					else
+					
+					if(result == null)
 					{
 						//some methods (who knows why) use this as their root node for the response 
 						result = child1;
@@ -100,7 +122,7 @@ public class MultiSpeakService {
 		if(methods != null)
 		{
 			//get the children
-			Iterator<Element> children = methods.getChildren("string", MultiSpeak.MULTISPEAK_RESULT_NAMESPACE).iterator();
+			Iterator<Element> children = methods.getChildren("string", methods.getNamespace()).iterator();
 			
 			while(children.hasNext())
 			{

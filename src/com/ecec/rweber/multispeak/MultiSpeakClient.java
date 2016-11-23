@@ -27,6 +27,7 @@ import org.jdom2.output.XMLOutputter;
  *  
  */
 class MultiSpeakClient {
+	private final String ACTION_URL = "http://www.multispeak.org/Version_3.0/";
 	private Logger m_log = null;
 	private MultiSpeakEndpoint m_service = null;
 	private String m_error = null;
@@ -108,7 +109,7 @@ class MultiSpeakClient {
 			while ((aString = in.readLine()) != null) {
 				outputString = outputString + aString;
 			}
-	
+			
 			//parse this into a document
 			SAXBuilder builder = new SAXBuilder();
 			
@@ -152,7 +153,7 @@ class MultiSpeakClient {
 		
 		//try and send the request to the endpoint
 		try{
-			response = this.call(request, m_service.getURL() + "/" + method);
+			response = this.call(request, ACTION_URL + method);
 			
 			if(this.hasError())
 			{
