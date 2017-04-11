@@ -41,7 +41,7 @@ public class MultiSpeakService {
 			Element temp = null;
 			for(int count = 0; count < params.length; count = count + 2)
 			{
-				temp = new Element(params[count]);
+				temp = new Element(params[count],MultiSpeak.MULTISPEAK_NAMESPACE);
 				temp.setText(params[count + 1]);
 				
 				result.add(temp);

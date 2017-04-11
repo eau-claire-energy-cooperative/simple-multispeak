@@ -17,6 +17,7 @@ import org.apache.log4j.Logger;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
+import org.jdom2.Namespace;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.XMLOutputter;
 
@@ -53,7 +54,7 @@ class MultiSpeakClient {
 		//create the body and the method call
 		Element body = new Element("Body",MultiSpeak.SOAP_NAMESPACE);
 		
-		Element xmlMethod = new Element(method);
+		Element xmlMethod = new Element(method,MultiSpeak.MULTISPEAK_NAMESPACE);
 		
 		if(params != null)
 		{
@@ -82,7 +83,7 @@ class MultiSpeakClient {
 		buffer = request.getBytes();
 		bout.write(buffer);
 		byte[] b = bout.toByteArray();
-	
+		
 		// Set the appropriate HTTP parameters.
 		httpConn.setRequestProperty("Content-Length",
 		String.valueOf(b.length));
