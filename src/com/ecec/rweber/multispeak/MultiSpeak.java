@@ -3,6 +3,8 @@ package com.ecec.rweber.multispeak;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
@@ -75,5 +77,35 @@ public final class MultiSpeak {
 		DateTime d = new DateTime(year,monthOfYear,dayOfMonth,hourOfDay,minuteOfHour,DateTimeZone.getDefault());
 		
 		return d.toString();
+	}
+	
+	/**
+	 * Exensions to the Multispeak spec are passed in as {@code <exensionItem>} values within a list. This helper function takes the list and finds a given {@code <extName>} node within the list and returns the value
+	 * 
+	 * @param ext the element containing the list of extensionItem nodes
+	 * @param extName the name of node to get the value from
+	 * @return the extValue from the given node, null if it doesn't exist
+	 */
+	public static String findExensionItem(Element ext, String extName){
+		String result = null;
+		
+		//get the namespace and list of elements
+		Namespace n = ext.getNamespace();
+		List<Element> extList = ext.getChildren("extensionsItem",n);
+		Iterator<Element> iter = extList.iterator();
+		Element anElem = null;
+		
+		//find the extension item that equals the passed in name
+		while(iter.hasNext() && result == null)
+		{
+			anElem = iter.next();
+			
+			if(anElem.getChildText("extName",n).equals(extName))
+			{
+				result = anElem.getChildText("extValue",n);
+			}
+		}
+		
+		return result;
 	}
 }
