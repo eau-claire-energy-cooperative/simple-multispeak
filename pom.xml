@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.ecec</groupId>
   <artifactId>simple-multispeak</artifactId>
-  <version>1.7</version>
+  <version>1.8</version>
   <name>Simple Multispeak Library</name>
   
   <repositories>

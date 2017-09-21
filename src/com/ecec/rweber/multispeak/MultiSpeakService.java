@@ -1,14 +1,12 @@
 package com.ecec.rweber.multispeak;
 
 import java.util.ArrayList;
+
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-
 import org.apache.log4j.Logger;
 import org.jdom2.Document;
 import org.jdom2.Element;
-import org.jdom2.Namespace;
 
 /**
  * This is an abstract class representing a service endpoint such as MR (meter reading), OA (outage managment), etc.
@@ -87,11 +85,11 @@ public class MultiSpeakService {
 	public boolean ping(){
 		boolean result = false;
 		
-		Element pingResult = this.call("PingURL").getResult();
+		MultiSpeakResult pingResult = this.call("PingURL");
 		
 		if(pingResult != null)
 		{
-			result = pingResult.getChildren().isEmpty();
+			result = pingResult.getResult().getChildren().isEmpty();
 		}
 		
 		return result;
