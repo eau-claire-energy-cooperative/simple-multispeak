@@ -121,9 +121,13 @@ public class MultiSpeakService {
 		try{
 			//send the request
 			Document xmlResponse = m_client.sendRequest(method,params);
-		
-			//send the request and parse the result
-			result = new MultiSpeakResult(xmlResponse,method);
+			
+			//make sure there is a response
+			if(xmlResponse != null)
+			{
+				//send the request and parse the result
+				result = new MultiSpeakResult(xmlResponse,method);
+			}
 		}
 		catch(MultiSpeakException e)
 		{
