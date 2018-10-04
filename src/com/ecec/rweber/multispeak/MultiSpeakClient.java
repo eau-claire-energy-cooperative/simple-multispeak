@@ -1,6 +1,7 @@
 package com.ecec.rweber.multispeak;
 
 import java.io.BufferedReader;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -9,15 +10,11 @@ import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URLConnection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-
 import org.apache.log4j.Logger;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
-import org.jdom2.Namespace;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.XMLOutputter;
 
@@ -27,7 +24,7 @@ import org.jdom2.output.XMLOutputter;
  * @author rweber
  *  
  */
-class MultiSpeakClient {
+public class MultiSpeakClient {
 	private final String ACTION_URL = "http://www.multispeak.org/Version_3.0/";
 	private Logger m_log = null;
 	private MultiSpeakEndpoint m_service = null;
@@ -138,7 +135,7 @@ class MultiSpeakClient {
 	 * @return the xml result of the call (could be null)
 	 * @throws MultiSpeakException
 	 */
-	public Document sendRequest(String method) throws MultiSpeakException {
+	protected Document sendRequest(String method) throws MultiSpeakException {
 		return this.sendRequest(method, null);
 	}
 	
@@ -148,7 +145,7 @@ class MultiSpeakClient {
 	 * @return the xml result of the call (could be null)
 	 * @throws MultiSpeakException
 	 */
-	public Document sendRequest(String method, List<Element> params) throws MultiSpeakException {
+	protected Document sendRequest(String method, List<Element> params) throws MultiSpeakException {
 		Document response = null;
 		String request = this.createEnvelope(method, params);
 		
