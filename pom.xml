@@ -42,30 +42,28 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.3</version>
         <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
+          <source>1.8</source>
+          <target>1.8</target>
         </configuration>
       </plugin>
       <plugin>
       	<groupId>org.apache.maven.plugins</groupId>
 		<artifactId>maven-javadoc-plugin</artifactId>
-		<version>2.10.4</version>
+		<version>3.0.0-M1</version>
 		<configuration>
-			<outputDirectory>${project.basedir}</outputDirectory>
-			<reportOutputDirectory>${project.basedir}</reportOutputDirectory>
+			<outputDirectory>${project.basedir}/docs</outputDirectory>
 			<excludePackageNames>com.ecec.rweber.multispeak.test</excludePackageNames>
 			<show>package</show>
 			<links>
-				<link>https://docs.oracle.com/javase/7/docs/api/</link>
 				<link>http://www.jdom.org/docs/apidocs/</link>
+				<link>https://www.joda.org/joda-time/apidocs</link>
 			</links>
 		</configuration>
       	<executions>
       		<execution>
 	      		<id>generate-javadoc</id>
-	      		<phase>generate-source</phase>
 	      		<goals>
-	      			<goal>javadoc</goal>
+	      			<goal>jar</goal>
 	      		</goals>
 	      	</execution>
       	</executions>
