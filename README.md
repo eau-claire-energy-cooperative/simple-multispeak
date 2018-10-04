@@ -1,7 +1,9 @@
 # Simple Multispeak Library
 
+_Disclaimer - This library is only compatible with Multispeak revision 3_
+
 ### Overview
-The goal of this library is to provide a simple, extendable, interface for communicating with a webservice implementing the [Multispeak Standard](http://www.multispeak.org/Pages/default.aspx). This is done via XML based HTTP calls utilizing the [JDOM 2 XML](http://www.jdom.org/) library. SOAP based libraries and auto stub generation (such as [AXIS](http://axis.apache.org/axis2/java/core/)) are not being used as WSDL files returned by vendor implementations of MultiSpeak are often incomplete and fail parsing tests. 
+The goal of this library is to provide a __simple__, extendable, interface for communicating with a webservice implementing the [Multispeak Standard](https://www.multispeak.org/). This is done via XML based HTTP calls utilizing the [JDOM 2 XML](http://www.jdom.org/) library. SOAP based libraries and auto stub generation (such as [AXIS](http://axis.apache.org/axis2/java/core/)) are not being used as WSDL files returned by vendor implementations of MultiSpeak are often incomplete and fail parsing tests. 
 
 Creating a useable program using this library will involve defining a MultiSpeakService java class and defining what methods you want to use. Vendor implementations of Multispeak often do not implement every method in the standard so using the built in getMethods() function will return a list of available methods. A ping() function is also available to test basic connectivity. 
 
@@ -118,7 +120,7 @@ public static void main(String[] args){
 
 ### Advanced Usage - Results Parsing
 
-Multispeak will return results as an XML payload. Calls done using "this.call()" by a MultiSpeakService class will trim off returned XML and give back a JDOM Element that contains only the results of the call. *If the call should fail for any reason, such as wrong endpoint information, network down, MultiSpeak method doesn't exist, wrong parameters; the returned Element will be NULL*. The Element class can be iterated through directly, or more usefully passed along to a class implementing the XmlResultLoader interface to encapsulate the data. 
+Multispeak will return results as an XML payload. Calls done using ```this.call()``` by a MultiSpeakService class will trim off returned XML and give back a JDOM Element that contains only the results of the call. *If the call should fail for any reason, such as wrong endpoint information, network down, MultiSpeak method doesn't exist, wrong parameters; the returned Element will be NULL*. The Element class can be iterated through directly, or more usefully passed along to a class implementing the XmlResultLoader interface to encapsulate the data. 
 
 An example of the returned XML from the above example using GetServiceLocationByMeterNo would be: 
 
@@ -140,28 +142,6 @@ An example of the returned XML from the above example using GetServiceLocationBy
   <ns2:route>3</ns2:route>
   <ns2:acRecvBal>0.0</ns2:acRecvBal>
   <ns2:connectDate>1995-06-01T05:00:00.000Z</ns2:connectDate>
-  <ns2:network>
-    <ns2:boardDist>4</ns2:boardDist>
-    <ns2:taxDist />
-    <ns2:franchiseDist />
-    <ns2:schoolDist />
-    <ns2:district>01</ns2:district>
-    <ns2:county>10</ns2:county>
-    <ns2:cityCode>13</ns2:cityCode>
-    <ns2:substationCode>EC</ns2:substationCode>
-    <ns2:feeder>1</ns2:feeder>
-    <ns2:phaseCd>A</ns2:phaseCd>
-    <ns2:eaLoc name="5255" />
-    <ns2:section>2</ns2:section>
-    <ns2:township>23</ns2:township>
-    <ns2:range>1</ns2:range>
-    <ns2:linkedTransformer>
-      <ns2:bankID>333</ns2:bankID>
-      <ns2:unitList>
-        <ns2:unitID>17</ns2:unitID>
-      </ns2:unitList>
-    </ns2:linkedTransformer>
-  </ns2:network>
   <ns2:phoneList>
     <ns2:phoneNumber>
       <ns2:phone>8880001111</ns2:phone>
