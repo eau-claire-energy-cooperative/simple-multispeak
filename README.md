@@ -9,7 +9,9 @@ Creating a useable program using this library will involve defining a MultiSpeak
 
 ### Installation
 
-The easiest way to use this class is to clone the repo and use Maven to build the jar. For any projects you create make sure that both the simple-multispeak.jar file and a copy of [JDOM](http://www.jdom.org/) are available to the class path. 
+The easiest way to use this class is to clone the repo and use Maven to build the jar. For any projects you create make sure that both the simple-multispeak.jar file and a copy of [JDOM](http://www.jdom.org/) are available to the class path.
+
+For all the library methods and classes see the [Javadoc](https://eau-claire-energy-cooperative.github.io/simple-multispeak/).  
 
 ### Getting Started
 
@@ -156,4 +158,4 @@ An example of the returned XML from the above example using GetServiceLocationBy
 </ns2:GetServiceLocationByMeterNoResult>
 
 ````
-The common namespace defined by the Multispeak Spec can be referenced statically when obtaining information using MultiSpeak.MULTISPEAK_RESULT_NAMESACE. 
+The common namespace defined by the Multispeak Spec can be referenced statically when obtaining information using [```MultiSpeak.MULTISPEAK_NAMESPACE```](https://eau-claire-energy-cooperative.github.io/simple-multispeak/com/ecec/rweber/multispeak/MultiSpeak.html#MULTISPEAK_NAMESPACE). 
