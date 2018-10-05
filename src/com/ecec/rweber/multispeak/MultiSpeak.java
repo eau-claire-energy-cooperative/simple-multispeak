@@ -1,14 +1,7 @@
 package com.ecec.rweber.multispeak;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
-import java.util.concurrent.TimeUnit;
-
 import org.jdom2.Element;
 import org.jdom2.Namespace;
 import org.jdom2.output.Format;
