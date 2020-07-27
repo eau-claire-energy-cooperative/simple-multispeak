@@ -78,7 +78,7 @@
     <repository>
       <id>github</id>
       <name>Eau Claire Energy Cooperative</name>
-      <url>https://maven.pkg.github.com/eau-claire-energy-cooperative</url>
+      <url>https://maven.pkg.github.com/eau-claire-energy-cooperative/maven-packages</url>
     </repository>
   </distributionManagement>
 </project>
