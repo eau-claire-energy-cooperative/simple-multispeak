@@ -56,11 +56,11 @@ public final class MultiSpeak {
 	
 	/**
 	 * helper method to convert a given date to a useable ISO date for xml calls
-	 * @param year
-	 * @param monthOfYear
-	 * @param dayOfMonth
-	 * @param hourOfDay
-	 * @param minuteOfHour
+	 * @param year the year, ex 2020
+	 * @param monthOfYear month of the year, 1-12
+	 * @param dayOfMonth day of the month 1-X
+	 * @param hourOfDay hour of the day 1-24
+	 * @param minuteOfHour minute of the hour 1-59
 	 * @return the date as an ISO date string (suitable for Multispeak)
 	 */
 	public static String toMultispeakDate(int year, int monthOfYear, int dayOfMonth, int hourOfDay, int minuteOfHour){

@@ -20,10 +20,10 @@ This library defines a service description class called MultiSpeakEndpoint. This
 ```java
 
 	//no authentication
-	MultiSpeakEndpoint cis = new MultiSpeakEndpoint("http://127.0.0.1/CB_Server");
+	MultiSpeakEndpoint cis = new MultiSpeakEndpoint(MultiSpeakVersion.Version3, "http://127.0.0.1/CB_Server");
 	
 	//with authentication
-	MultiSpeakEndpoint cis = new MultiSpeakEndpoint("http://127.0.0.1/CB_Server","user","pass","appname");
+	MultiSpeakEndpoint cis = new MultiSpeakEndpoint(MultiSpeakVersion.Version3"http://127.0.0.1/CB_Server","user","pass","appname");
 
 ````
 
@@ -104,7 +104,7 @@ Once this is done, integrating this with any project you want to use is as simpl
 ```java
 
 public static void main(String[] args){
-	MultiSpeakEndpoint cis = new MultiSpeakEndpoint("http://127.0.0.1/CB_Server"); //create the endpoint
+	MultiSpeakEndpoint cis = new MultiSpeakEndpoint(MultispeakVersion.Version3, "http://127.0.0.1/CB_Server"); //create the endpoint
 	CBService cb = new CBService(cis); 	//create the service using this endpoing
 	
 	ServiceLocation sLocation = cb.getServiceByMeter("12345");
@@ -118,7 +118,7 @@ public static void main(String[] args){
 }
 
 ````
-***Note that the helper class implementing XmlResultLoader is optional. It is useful though to encapsulate responses into a Java Object, especially if these will contain other helpful methods used to process the data; or if you wish to export data in a more useful format - like JSON. ***
+_Note that the helper class implementing XmlResultLoader is optional. It is useful though to encapsulate responses into a Java Object, especially if these will contain other helpful methods used to process the data; or if you wish to export data in a more useful format - like JSON._
 
 ### Advanced Usage - Results Parsing
 
@@ -157,5 +157,5 @@ An example of the returned XML from the above example using GetServiceLocationBy
   <ns2:timezone DSTEnabled="true" UTCOffset="-6.0" name="Central Standard Time" />
 </ns2:GetServiceLocationByMeterNoResult>
 
-````
-The common namespace defined by the Multispeak Spec can be referenced statically when obtaining information using [```MultiSpeak.MULTISPEAK_NAMESPACE```](https://eau-claire-energy-cooperative.github.io/simple-multispeak/com/ecec/rweber/multispeak/MultiSpeak.html#MULTISPEAK_NAMESPACE). 
+```
+The common namespace defined by the Multispeak Spec can be referenced statically when obtaining information using [```MultiSpeakVersion.getNamespace()```](https://eau-claire-energy-cooperative.github.io/simple-multispeak/com/ecec/rweber/multispeak/MultiSpeakVersion.html). 

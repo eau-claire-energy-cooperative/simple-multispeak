@@ -152,7 +152,7 @@ public class MultiSpeakClient {
 	/**
 	 * @param method Multispeak Method to send to the endpoint
 	 * @return the xml result of the call (could be null)
-	 * @throws MultiSpeakException
+	 * @throws MultiSpeakException an exception meaning that some part of the result is malformed or the request was in error
 	 */
 	protected Document sendRequest(String method) throws MultiSpeakException {
 		return this.sendRequest(method, null);
@@ -162,7 +162,7 @@ public class MultiSpeakClient {
 	 * @param method Multispeak Method to send to the endpoint
 	 * @param params the element that contain the parameters for this method
 	 * @return the xml result of the call (could be null)
-	 * @throws MultiSpeakException
+	 * @throws MultiSpeakException an exception meaning that some part of the result is malformed or the request was in error
 	 */
 	protected Document sendRequest(String method, String[] params) throws MultiSpeakException {
 		Document response = null;

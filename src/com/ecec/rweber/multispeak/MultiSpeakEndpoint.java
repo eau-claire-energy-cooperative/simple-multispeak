@@ -26,7 +26,7 @@ public class MultiSpeakEndpoint {
 	private Map<String,String> m_options = null;
 	
 	/**
-	 * @param the version of multispeak to use for SOAP requests
+	 * @param version the version of multispeak to use for SOAP requests
 	 * @param company the name of the company as defined by the service endpoint
 	 * @param url the full URL, including port if needed
 	 */
@@ -44,7 +44,7 @@ public class MultiSpeakEndpoint {
 	}
 	
 	/**
-	 * @param the version of multispeak to use for SOAP requests
+	 * @param version the version of multispeak to use for SOAP requests
 	 * @param company the name of the company as defined by the service endpoint
 	 * @param url the full URL, including port if needed
 	 * @param username username of the endpoint
@@ -81,7 +81,7 @@ public class MultiSpeakEndpoint {
 	}
 	
 	/**
-	 * @param the version of multispeak to use for SOAP requests
+	 * @param version the version of multispeak to use for SOAP requests
 	 * @param company the name of the company as defined by the service endpoint
 	 * @param url the full URL, including port if needed
 	 * @param username username of the endpoint
