@@ -10,6 +10,7 @@ import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
 import org.jdom2.Document;
@@ -25,7 +26,6 @@ import org.jdom2.output.XMLOutputter;
  *  
  */
 public class MultiSpeakClient {
-	private final String ACTION_URL = "http://www.multispeak.org/Version_3.0/";
 	private Logger m_log = null;
 	private MultiSpeakEndpoint m_service = null;
 	private String m_error = null;
@@ -37,6 +37,25 @@ public class MultiSpeakClient {
 	
 	private boolean hasError(){
 		return m_error != null;
+	}
+	
+	private List<Element> createParams(String[] params){
+		List<Element> result = new ArrayList<Element>();
+		
+		//we must have equal key/value pairs
+		if(params.length > 0 && params.length % 2 == 0)
+		{
+			Element temp = null;
+			for(int count = 0; count < params.length; count = count + 2)
+			{
+				temp = new Element(params[count], m_service.getVersion().getNamespace());
+				temp.setText(params[count + 1]);
+				
+				result.add(temp);
+			}
+		}
+		
+		return result;
 	}
 	
 	private String createEnvelope(String method, List<Element> params){
@@ -51,7 +70,7 @@ public class MultiSpeakClient {
 		//create the body and the method call
 		Element body = new Element("Body",MultiSpeak.SOAP_NAMESPACE);
 		
-		Element xmlMethod = new Element(method,MultiSpeak.MULTISPEAK_NAMESPACE);
+		Element xmlMethod = new Element(method, m_service.getVersion().getNamespace());
 		
 		if(params != null)
 		{
@@ -145,13 +164,13 @@ public class MultiSpeakClient {
 	 * @return the xml result of the call (could be null)
 	 * @throws MultiSpeakException
 	 */
-	protected Document sendRequest(String method, List<Element> params) throws MultiSpeakException {
+	protected Document sendRequest(String method, String[] params) throws MultiSpeakException {
 		Document response = null;
-		String request = this.createEnvelope(method, params);
-		
+		String request = this.createEnvelope(method, this.createParams(params));
+
 		//try and send the request to the endpoint
 		try{
-			response = this.call(request, ACTION_URL + method);
+			response = this.call(request, m_service.getVersion().getActionURL(method));
 			
 			if(this.hasError())
 			{

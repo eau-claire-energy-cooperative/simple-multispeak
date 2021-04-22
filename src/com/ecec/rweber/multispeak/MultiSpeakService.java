@@ -29,26 +29,6 @@ public class MultiSpeakService {
 		m_client = new MultiSpeakClient(endpoint);
 	}
 	
-	
-	protected List<Element> createParams(String[] params){
-		List<Element> result = new ArrayList<Element>();
-		
-		//we must have equal key/value pairs
-		if(params.length > 0 && params.length % 2 == 0)
-		{
-			Element temp = null;
-			for(int count = 0; count < params.length; count = count + 2)
-			{
-				temp = new Element(params[count],MultiSpeak.MULTISPEAK_NAMESPACE);
-				temp.setText(params[count + 1]);
-				
-				result.add(temp);
-			}
-		}
-		
-		return result;
-	}
-	
 	public MultiSpeakResult getLastResult(){
 		return m_lastResult;
 	}
@@ -101,11 +81,7 @@ public class MultiSpeakService {
 	 * @return the result element with the SOAP envelope stripped off
 	 */
 	public MultiSpeakResult call(String method) {
-		return this.call(method, createParams(new String[]{}));
-	}
-	
-	public MultiSpeakResult call(String method, String[] params){
-		return this.call(method,createParams(params));
+		return this.call(method, new String[]{});
 	}
 	
 	/**
@@ -115,7 +91,7 @@ public class MultiSpeakService {
 	 * @param params any parameters to pass, can be null
 	 * @return the result element with the SOAP envelope stripped off - can be NULL
 	 */
-	public MultiSpeakResult call(String method, List<Element> params) {
+	public MultiSpeakResult call(String method, String[] params) {
 		MultiSpeakResult result = null;
 		
 		try{
