@@ -22,6 +22,27 @@ public enum MultiSpeakVersion {
 		this.namespace = namespace;
 	}
 	
+	
+	/**
+	 * loads the correct MultiSpeakVersion enum object from the given version number
+	 * 
+	 * @param version Multispeak version to load object of
+	 */
+	public static MultiSpeakVersion loadVersion(double version) {
+		MultiSpeakVersion result = null;
+		
+		if(version == Version3.getVersion())
+		{
+			result = MultiSpeakVersion.Version3;
+		}
+		else if(version == Version41.getVersion())
+		{
+			result = MultiSpeakVersion.Version41;
+		}
+		
+		return result;
+	}
+	
 	public double getVersion() {
 		return version;
 	}
@@ -32,5 +53,10 @@ public enum MultiSpeakVersion {
 	
 	public String getActionURL(String method) {
 		return this.namespace + "/" + method;
+	}
+	
+	@Override
+	public String toString() {
+		return "Version " + this.getVersion();
 	}
 }
