@@ -59,7 +59,7 @@ public class MultiSpeakEndpoint {
 		Element header = new Element("Header",MultiSpeak.SOAP_NAMESPACE);
 		Element msHeader = new Element("MultiSpeakMsgHeader", m_version.getNamespace());
 		
-		msHeader.setAttribute("Version","3.0");
+		msHeader.setAttribute("Version", m_version.getVersion() + "");
 		
 		//add any options that exist
 		Iterator<String> iter = m_options.keySet().iterator();
