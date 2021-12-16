@@ -1,10 +1,11 @@
 package com.ecec.rweber.multispeak;
 
 import java.util.ArrayList;
-
 import java.util.Iterator;
 import java.util.List;
-import org.apache.log4j.Logger;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jdom2.Document;
 import org.jdom2.Element;
 
@@ -25,7 +26,7 @@ public class MultiSpeakService {
 	 * @param endpoint a valid MultiSpeakEndpoint - connection information
 	 */
 	public MultiSpeakService(MultiSpeakEndpoint endpoint){
-		m_log = Logger.getLogger(this.getClass());
+		m_log = LogManager.getLogger(this.getClass());
 		m_client = new MultiSpeakClient(endpoint);
 	}
 	
