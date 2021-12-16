@@ -95,4 +95,18 @@ public class MultiSpeakResult {
 		
 		return result;
 	}
+	
+	public boolean containsData() {
+		boolean result = true;
+		
+		Element resultElem = this.getResult();
+		
+		//if there are no children there is no data
+		if(resultElem.getChildren().isEmpty())
+		{
+			result = false;
+		}
+		
+		return result;
+	}
 }
