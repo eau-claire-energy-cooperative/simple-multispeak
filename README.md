@@ -20,12 +20,25 @@ This library defines a service description class called MultiSpeakEndpoint. This
 ```java
 
 	//no authentication
-	MultiSpeakEndpoint cis = new MultiSpeakEndpoint(MultiSpeakVersion.Version3, "http://127.0.0.1/CB_Server");
+	MultiSpeakEndpoint cis = new MultiSpeakEndpoint(MultiSpeakVersion.Version3, "company_name", "http://127.0.0.1/CB_Server");
 	
 	//with authentication
-	MultiSpeakEndpoint cis = new MultiSpeakEndpoint(MultiSpeakVersion.Version3"http://127.0.0.1/CB_Server","user","pass","appname");
+	MultiSpeakEndpoint cis = new MultiSpeakEndpoint(MultiSpeakVersion.Version3, "company_name", "http://127.0.0.1/CB_Server","user","pass","appname");
+	
+	//from an XML file
+	MultiSpeakEndpoint cis = new MultiSpeakEndpoint(new File("cis.xml"));
 
 ````
+
+If loading a `MultispeakEndpoint` directly from an XML file the file must contain a root element and then a child node for each of the fields you wish to set. The __version__, __company__, and __url__ fields are mandatory. An example would be:
+
+```xml
+<multispeak>
+  <version>3.0</version>
+  <company>company_name</company>
+  <url>http://127.0.0.1/CB_Server</url>
+</multispeak>
+```
 
 Once the connection information is established a class extending MultiSpeakService must be created to communicate with the endpoint and return information. For example, this simple service implements the GetServiceLocationByMeterNo Multispeak method as well as a helper class to contain the information. 
 
