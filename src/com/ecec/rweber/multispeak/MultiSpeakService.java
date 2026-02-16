@@ -116,4 +116,27 @@ public class MultiSpeakService {
 		
 		return result;
 	}
+
+	/**
+	 * Calls a MultiSpeak SOAP method using a list of pre-built JDOM element parameters.
+	 *
+	 * @param method the method to send to the MultiSpeak Service
+	 * @param params the list of JDOM Elements representing the method parameters
+	 * @return the result element with the SOAP envelope stripped off - can be NULL
+	 */
+	public MultiSpeakResult call(String method, List<Element> params) {
+		MultiSpeakResult result = null;
+
+		try {
+			Document xmlResponse = m_client.sendRequestElements(method, params);
+			if (xmlResponse != null) {
+				result = new MultiSpeakResult(xmlResponse, method);
+			}
+		} catch (MultiSpeakException e) {
+			m_log.error(e.getMessage(), e);
+		}
+
+		m_lastResult = result;
+		return result;
+	}
 }
