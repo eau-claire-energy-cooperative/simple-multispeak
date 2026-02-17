@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.jdom2.Namespace;
 
 /**
  * This is an abstract class representing a service endpoint such as MR (meter reading), OA (outage managment), etc.
@@ -20,18 +21,52 @@ import org.jdom2.Element;
 public class MultiSpeakService {
 	protected Logger m_log = null;
 	protected MultiSpeakClient m_client = null;
+	protected MultiSpeakEndpoint m_endpoint = null;
 	private MultiSpeakResult m_lastResult = null;
 	
 	/**
 	 * @param endpoint a valid MultiSpeakEndpoint - connection information
 	 */
 	public MultiSpeakService(MultiSpeakEndpoint endpoint){
+		m_endpoint = endpoint;
 		m_log = LogManager.getLogger(this.getClass());
 		m_client = new MultiSpeakClient(endpoint);
 	}
 	
 	public MultiSpeakResult getLastResult(){
 		return m_lastResult;
+	}
+	
+	/*
+	 * @return Namespace to use for creating nested XML
+	 */
+	protected Namespace getEndpointNamespace() {
+		return m_endpoint.getVersion().getNamespace();
+	}
+	
+	/*
+	 * Helper to create elements using the proper namespace
+	 * 
+	 * @param name the string name of the element you want to create
+	 * @return the Element that was created using this name
+	 */
+	public Element createElement(String name) {
+		return new Element(name, getEndpointNamespace());
+	}
+	
+	/*
+	 * Helper to create nested elements using the proper namespace
+	 * 
+	 * @param name the string name of the element you want to create
+	 * @param value mapping for the element you want to create
+	 * @return the Element that was create using the params
+	 */
+	protected Element createElement(String name, String value) {
+	    Element element = createElement(name);
+	    if (value != null) {
+	    	element.setText(value);
+	    }
+	    return element;
 	}
 	
 	/**
@@ -116,7 +151,7 @@ public class MultiSpeakService {
 		
 		return result;
 	}
-
+	
 	/**
 	 * Calls a MultiSpeak SOAP method using a list of pre-built JDOM element parameters.
 	 *
