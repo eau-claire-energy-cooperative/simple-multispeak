@@ -159,7 +159,7 @@ public class MultiSpeakClient {
 	 * @throws MultiSpeakException an exception meaning that some part of the result is malformed or the request was in error
 	 */
 	protected Document sendRequest(String method) throws MultiSpeakException {
-		return this.sendRequest(method, null);
+		return this.sendRequest(method, new String [] {});
 	}
 	
 	/**
@@ -196,4 +196,28 @@ public class MultiSpeakClient {
 		
 		return response;
 	}
+
+	/**
+	 * @param method Multispeak Method to send to the endpoint
+	 * @param params the element that contain the parameters for this method
+	 * @return the SOAP response as a JDOM document, or null if the request failed
+	 * @throws MultiSpeakException an exception meaning that some part of the result is malformed or the request was in error
+	 */
+	protected Document sendRequest(String method, List<Element> params) throws MultiSpeakException {
+	    Document response = null;
+
+	    String request = this.createEnvelope(method, params);
+
+	    try {
+	        response = this.call(request, m_service.getVersion().getActionURL(method));
+	        if (this.hasError()) {
+	            throw new MultiSpeakException(m_error);
+	        }
+	    } catch (Exception e) {
+	        m_log.error(e.getMessage(), e);
+	    }
+
+	    return response;
+	}
+
 }
