@@ -128,7 +128,7 @@ public class MultiSpeakService {
 		MultiSpeakResult result = null;
 
 		try {
-			Document xmlResponse = m_client.sendRequestElements(method, params);
+			Document xmlResponse = m_client.sendRequest(method, params);
 			if (xmlResponse != null) {
 				result = new MultiSpeakResult(xmlResponse, method);
 			}
