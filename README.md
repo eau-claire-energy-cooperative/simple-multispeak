@@ -1,7 +1,7 @@
 # Simple Multispeak Library
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg)](https://github.com/RichardLitt/standard-readme)
 
-_Disclaimer - This library is only compatible with Multispeak revision 3_
+_Disclaimer - This library is only compatible with Multispeak versions 3 and 4_
 
 A java library that simplifies communicating with the [Multispeak](https://www.multispeak.org/) web service standard. 
 
@@ -83,8 +83,7 @@ public class CBService extends MultiSpeakService {
 		ServiceLocation result = null;
 		
 		//params to a method are passed as a map of key/value pairs
-		Map<String,String> params = new HashMap<String,String>();
-		params.put("meterNo",meterLoc);
+		String[] params = new String[]{"meterNo",meterLoc};
 		
 		Element location = this.call("GetServiceLocationByMeterNo",params);
 		
