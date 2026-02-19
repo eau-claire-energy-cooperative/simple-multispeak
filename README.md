@@ -1,32 +1,51 @@
 # Simple Multispeak Library
+[![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg)](https://github.com/RichardLitt/standard-readme)
 
 _Disclaimer - This library is only compatible with Multispeak revision 3_
 
-### Overview
-The goal of this library is to provide a __simple__, extendable, interface for communicating with a webservice implementing the [Multispeak Standard](https://www.multispeak.org/). This is done via XML based HTTP calls utilizing the [JDOM 2 XML](http://www.jdom.org/) library. SOAP based libraries and auto stub generation (such as [AXIS](http://axis.apache.org/axis2/java/core/)) are not being used as WSDL files returned by vendor implementations of MultiSpeak are often incomplete and fail parsing tests. 
+A java library that simplifies communicating with the [Multispeak](https://www.multispeak.org/) web service standard. 
 
-Creating a useable program using this library will involve defining a MultiSpeakService java class and defining what methods you want to use. Vendor implementations of Multispeak often do not implement every method in the standard so using the built in getMethods() function will return a list of available methods. A ping() function is also available to test basic connectivity. 
+## Overview
+The goal of this library is to provide a __simple__, extendable, interface for communicating with a web service implementing the [Multispeak Standard](https://www.multispeak.org/). This is done via XML based HTTP calls utilizing the [JDOM 2 XML](http://www.jdom.org/) library. SOAP based libraries and auto stub generation (such as [AXIS](http://axis.apache.org/axis2/java/core/)) are not being used as WSDL files returned by vendor implementations of MultiSpeak are often incomplete and fail parsing tests. 
 
-### Installation
+Creating a useable program using this library will involve creating a `MultiSpeakService` java class and defining what methods you want to use. Vendor implementations of Multispeak often do not implement every method in the standard so using the built in _getMethods()_ function will return a list of available methods. A _ping()_ function is also available to test basic connectivity. 
+
+## Table of Contents
+
+- [Install](#install)
+- [Usage](#usage)
+  - [Authentication](#authentication)
+  - [Calling Multispeak Methods](#calling-multispeak-methods)
+- [Advanced Usage](#advanced-usage)
+  - [Logging](#logging)
+  - [Results Parsing](#results-parsing)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Install
 
 The easiest way to use this class is to clone the repo and use Maven to build the jar. For any projects you create make sure that both the simple-multispeak.jar file and a copy of [JDOM](http://www.jdom.org/) are available to the class path.
 
 For all the library methods and classes see the [Javadoc](https://eau-claire-energy-cooperative.github.io/simple-multispeak/).  
 
-### Getting Started
+## Usage
 
-This library defines a service description class called MultiSpeakEndpoint. This class contains the connection information for the service you wish to connect to. Usage is as follows: 
+It is assumed you are familiar with the Multispeak endpoints you want to communicate with, and how to troubleshoot the correct format for sending and receiving information. Documentation on Multispeak itself, or specific methods are not available within this documentation. 
+
+### Authentication
+
+To authenticate to a Multispeak service you must first create an instance of `MultiSpeakEndpoint`. This class will contains the connection information for the service you wish to connect to. Usage is as follows: 
 
 ```java
 
-	//no authentication
-	MultiSpeakEndpoint cis = new MultiSpeakEndpoint(MultiSpeakVersion.Version3, "company_name", "http://127.0.0.1/CB_Server");
+//no authentication
+MultiSpeakEndpoint cis = new MultiSpeakEndpoint(MultiSpeakVersion.Version3, "company_name", "http://127.0.0.1/CB_Server");
 	
-	//with authentication
-	MultiSpeakEndpoint cis = new MultiSpeakEndpoint(MultiSpeakVersion.Version3, "company_name", "http://127.0.0.1/CB_Server","user","pass","appname");
+//with authentication
+MultiSpeakEndpoint cis = new MultiSpeakEndpoint(MultiSpeakVersion.Version3, "company_name", "http://127.0.0.1/CB_Server","user","pass","appname");
 	
-	//from an XML file
-	MultiSpeakEndpoint cis = new MultiSpeakEndpoint(new File("cis.xml"));
+//from an XML file
+MultiSpeakEndpoint cis = new MultiSpeakEndpoint(new File("cis.xml"));
 
 ````
 
@@ -40,7 +59,9 @@ If loading a `MultispeakEndpoint` directly from an XML file the file must contai
 </multispeak>
 ```
 
-Once the connection information is established a class extending MultiSpeakService must be created to communicate with the endpoint and return information. For example, this simple service implements the GetServiceLocationByMeterNo Multispeak method as well as a helper class to contain the information. 
+### Calling Multispeak Methods
+
+Once the connection information is established a class extending `MultiSpeakService` must be created to communicate with the endpoint and return information. For example, this simple service implements the _GetServiceLocationByMeterNo_ Multispeak method as well as a helper class to contain the information. 
 
 ```java
 
@@ -133,9 +154,26 @@ public static void main(String[] args){
 ````
 _Note that the helper class implementing XmlResultLoader is optional. It is useful though to encapsulate responses into a Java Object, especially if these will contain other helpful methods used to process the data; or if you wish to export data in a more useful format - like JSON._
 
-### Advanced Usage - Results Parsing
+## Advanced Usage
 
-Multispeak will return results as an XML payload. Calls done using ```this.call()``` by a MultiSpeakService class will trim off returned XML and give back a JDOM Element that contains only the results of the call. *If the call should fail for any reason, such as wrong endpoint information, network down, MultiSpeak method doesn't exist, wrong parameters; the returned Element will be NULL*. The Element class can be iterated through directly, or more usefully passed along to a class implementing the XmlResultLoader interface to encapsulate the data. 
+### Logging
+
+As part of development it may be useful to print out payloads and results. A static helper method exists to format the returned XML data in a viewable format for logging. 
+
+```java
+import com.ecec.rweber.multispeak.MultiSpeak;
+
+// print the location element from the example above
+Element location = this.call("GetServiceLocationByMeterNo",params);
+
+String xml = Multispeak.printXML(location);
+System.out.println(xml);
+
+```
+
+### Results Parsing
+
+Multispeak will return results as an XML payload. Calls done using `this.call()` by a MultiSpeakService class will trim off returned XML and give back a JDOM Element that contains only the results of the call. *If the call should fail for any reason, such as wrong endpoint information, network down, MultiSpeak method doesn't exist, wrong parameters; the returned Element will be NULL*. The Element class can be iterated through directly, or more usefully passed along to a class implementing the XmlResultLoader interface to encapsulate the data. 
 
 An example of the returned XML from the above example using GetServiceLocationByMeterNo would be: 
 
@@ -171,4 +209,13 @@ An example of the returned XML from the above example using GetServiceLocationBy
 </ns2:GetServiceLocationByMeterNoResult>
 
 ```
-The common namespace defined by the Multispeak Spec can be referenced statically when obtaining information using [```MultiSpeakVersion.getNamespace()```](https://eau-claire-energy-cooperative.github.io/simple-multispeak/com/ecec/rweber/multispeak/MultiSpeakVersion.html). 
+The common namespace defined by the Multispeak Spec can be referenced statically when obtaining information using [`MultiSpeakVersion.getNamespace()`](https://eau-claire-energy-cooperative.github.io/simple-multispeak/com/ecec/rweber/multispeak/MultiSpeakVersion.html). 
+
+## Contributing
+
+This is an internal tool posted in the hopes it will help someone with a similar issue. Post an [Issue](https://github.com/eau-claire-energy-cooperative/simple-multispeak/issues) for errors with base functionality but no enhancements beyond what we need for our use cases will be considered.
+
+## License
+
+[GPLv3](/LICENSE)
+
