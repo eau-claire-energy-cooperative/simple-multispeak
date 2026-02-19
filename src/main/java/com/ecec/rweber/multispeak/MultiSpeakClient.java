@@ -89,6 +89,10 @@ public class MultiSpeakClient {
 		return new XMLOutputter().outputString(result);
 	}
 	
+	protected MultiSpeakEndpoint getEndpoint() {
+		return m_service;
+	}
+	
 	private Document call(String request, String soapAction) throws MalformedURLException, IOException, JDOMException {
 		m_error = null;
 		Document result = null;

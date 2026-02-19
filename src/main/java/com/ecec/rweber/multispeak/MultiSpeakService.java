@@ -21,14 +21,12 @@ import org.jdom2.Namespace;
 public class MultiSpeakService {
 	protected Logger m_log = null;
 	protected MultiSpeakClient m_client = null;
-	protected MultiSpeakEndpoint m_endpoint = null;
 	private MultiSpeakResult m_lastResult = null;
 	
 	/**
 	 * @param endpoint a valid MultiSpeakEndpoint - connection information
 	 */
 	public MultiSpeakService(MultiSpeakEndpoint endpoint){
-		m_endpoint = endpoint;
 		m_log = LogManager.getLogger(this.getClass());
 		m_client = new MultiSpeakClient(endpoint);
 	}
@@ -41,7 +39,7 @@ public class MultiSpeakService {
 	 * @return Namespace to use for creating nested XML
 	 */
 	protected Namespace getEndpointNamespace() {
-		return m_endpoint.getVersion().getNamespace();
+		return m_client.getEndpoint().getVersion().getNamespace();
 	}
 	
 	/*
