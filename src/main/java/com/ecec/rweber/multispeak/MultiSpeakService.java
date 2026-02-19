@@ -141,7 +141,7 @@ public class MultiSpeakService {
 		}
 		catch(MultiSpeakException e)
 		{
-			m_log.error(e.getMessage(),e);
+			result = new MultiSpeakResult(e, method);
 		}
 		
 		//set last result - even if it's null
@@ -166,7 +166,7 @@ public class MultiSpeakService {
 				result = new MultiSpeakResult(xmlResponse, method);
 			}
 		} catch (MultiSpeakException e) {
-			m_log.error(e.getMessage(), e);
+			result = new MultiSpeakResult(e, method);
 		}
 
 		m_lastResult = result;

@@ -12,11 +12,22 @@ import org.jdom2.Namespace;
 
 public class MultiSpeakResult {
 	private Document xml = null;
+	private MultiSpeakException exception = null;
 	private String method = null;
 	
 	MultiSpeakResult(Document xml, String method){
 		this.xml = xml;
 		this.method = method;
+	}
+	
+	MultiSpeakResult(MultiSpeakException ex, String method){
+		this.exception = ex;
+		this.method = method;
+	}
+	
+	public boolean isSuccess() {
+		// return true if xml is present
+		return this.xml != null;
 	}
 	
 	public Element getResult(){
@@ -108,5 +119,9 @@ public class MultiSpeakResult {
 		}
 		
 		return result;
+	}
+	
+	public MultiSpeakException getException() {
+		return this.exception;
 	}
 }
