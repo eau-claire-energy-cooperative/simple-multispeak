@@ -216,5 +216,5 @@ This is an internal tool posted in the hopes it will help someone with a similar
 
 ## License
 
-[GPLv3](/LICENSE)
+[LGPLv3](/LICENSE)
 
